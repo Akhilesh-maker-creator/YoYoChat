@@ -24,7 +24,6 @@ router.post("/logout",ProtectedRoute, logout)
 
 router.put("/updateUser",
   [body('name', 'Enter a valid name').isLength({ min: 5 }),
-  body('email', 'Enter a valid email').isEmail(),
   body('bio', 'Enter a valid bio').isLength({ min: 10 })],ProtectedRoute, updateUser)
 
 router.delete("/deleteUser",ProtectedRoute, deleteUser)
@@ -32,7 +31,7 @@ router.delete("/deleteUser",ProtectedRoute, deleteUser)
 router.get("/checkAuth",ProtectedRoute,(req,res)=>{
     try {
         const user = req.user
-        res.status(201).json({user})
+        res.status(201).json(user)
     } catch (error) {
         console.log(error);
         res.status(500).json({ message:"Error in auth checking"})

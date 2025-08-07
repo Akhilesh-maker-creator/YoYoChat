@@ -9,9 +9,9 @@ router.use(ProtectedRoute)
 
 router.get("/getFriends", getFriends)
 
-router.post("/sendFriendRequest/:id",sendFriendRequest)
+router.post("/sendFriendReq/:id",sendFriendRequest)
 
-router.post("/acceptFriendRequest/:id",acceptFriendRequest) // id is friend request id
+router.post("/acceptFriendReq/:id",acceptFriendRequest) // id is friend request id
 
 
 router.get("/outgoingFriendReq", outgoingFriendReq)

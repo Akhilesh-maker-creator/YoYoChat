@@ -142,7 +142,7 @@ export const getUser = async (req, res) => {
 // to work on update
 export const updateUser = async (req, res) => {
   try {
-    const { name, email, bio, profilePic } = req.body;
+    const { name, bio, profilePic } = req.body;
     const checkUser = await User.findOne({ email });
     if (checkUser) {
       return res
@@ -157,7 +157,6 @@ export const updateUser = async (req, res) => {
     }
     const user = req.user;
     user.name = name;
-    user.email = email;
     user.profilePic = imageUrl;
     user.bio = bio;
     await user.save();

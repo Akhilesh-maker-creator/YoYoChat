@@ -4,6 +4,7 @@ import { connectDB } from "./db.js"
 import { app, server } from "./src/config/socket.js"
 import authRoutes from "./src/routes/auth.routes.js"
 import friendRoutes from "./src/routes/friend.routes.js"
+import messageRoutes from "./src/routes/message.routes.js"
 import cookieParser from "cookie-parser"
 
 dotenv.config()
@@ -16,6 +17,7 @@ app.use(cookieParser())
 
 app.use("/api/auth", authRoutes)
 app.use("/api/friend", friendRoutes)
+app.use("/api/message", messageRoutes)
 
 
 server.listen(PORT, () => {
