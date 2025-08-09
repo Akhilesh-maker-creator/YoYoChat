@@ -2,6 +2,7 @@ import { User } from "../models/User.model.js";
 import { FriendRequest } from "../models/FriendRequest.model.js";
 import { Message } from "../models/Message.model.js";
 import cloudinary from "../config/cloudinary.js";
+import { userSocketMap } from "../config/socket.js";
 
 
 
@@ -45,7 +46,7 @@ export const sendMessage = async()=>{
             return res.status(404).json({ message:"User not found"})          
         }
 
-        if(!req.user.friends.includes(friendId)){
+        if(!req.user.friends.includes(fricoendId)){
              return res.status(400).json({ message:"Cannot message if you're not their friend"})
         }
         if(!text && !image){
@@ -65,7 +66,11 @@ export const sendMessage = async()=>{
             image: imageUrl
         })
 
-        // to do real time 
+        
+        const friendSocketId = userSocketMap[friendId]
+        if (friendSocketId){
+            io.to(friendSocketId).emit("newMessage", newMessage)
+        }
 
         res.status(201).json(newMessage)
     } catch (error) {
