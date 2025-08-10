@@ -1,20 +1,32 @@
 import React from "react";
 import { Link } from "react-router";
+import useAuth from "../hooks/userHooks/useAuth";
+
 
 
 const Navbar = () => {
+  const { authUser } = useAuth()
+  const isAuthenticated = Boolean(authUser)
+
   return (
     <>
-      <header className="flex h-14 items-center bg-base-300 justify-between">
+      <header className="flex h-14 items-center bg-base-300 justify-between border-b-2 ">
         <h2 className=" p-14 text-2xl font-bold text-green-600 ">YoYoChat</h2>
         <nav className="p-9 flex items-center justify-center gap-9">
-          <Link className=" hidden sm:inline " to = "/profile">
+
+          { isAuthenticated &&
+            <Link className=" hidden sm:inline " to = "/profile">
             Profile
           </Link>
+          }
+
           <button className="btn btn-sm ">Settings</button>
-          <button className=" btn btn-sm hidden sm:inline ">
+
+          {isAuthenticated &&
+            <button className=" btn btn-sm hidden sm:inline ">
             Logout
           </button>
+          }
         </nav>
       </header>
     </>
