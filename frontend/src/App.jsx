@@ -16,10 +16,14 @@ const App = () => {
     <div>
       <Navbar/>
       <Routes>
-        <Route path="/" element={ isAuthenticated ? <HomePage />: <Navigate to = "/login"/>} />
+        {/* <Route path="/" element={ isAuthenticated ? <HomePage />: <Navigate to = "/login"/>} />
         <Route path="/login" element={ !isAuthenticated ? <LoginPage />: <Navigate to ="/"/>} />
         <Route path="/signUp" element={ !isAuthenticated ? <SignUpPage />: <Navigate to ="/"/> } />
-        <Route path="/profile" element={ isAuthenticated ? <ProfilePage />: <Navigate to = "/login"/>} />
+        <Route path="/profile" element={ isAuthenticated ? <ProfilePage />: <Navigate to = "/login"/>} /> */}
+        <Route path="/" element={ <HomePage />} />
+        <Route path="/login" element={  <LoginPage />} />
+        <Route path="/signUp" element={  <SignUpPage />} />
+        <Route path="/profile" element={  <ProfilePage />} />
       </Routes>
     </div>
   );

@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="flex h-14 items-center bg-base-300 justify-between border-b-2 ">
+      <header className="flex h-14 items-center bg-black justify-between shadow-lg ">
         <h2 className=" p-14 text-2xl font-bold text-green-600 ">YoYoChat</h2>
         <nav className="p-9 flex items-center justify-center gap-9">
 
@@ -20,7 +20,7 @@ const Navbar = () => {
           </Link>
           }
 
-          <button className="btn btn-sm ">Settings</button>
+          <button className="btn btn-sm ">Themes</button>
 
           {isAuthenticated &&
             <button className=" btn btn-sm hidden sm:inline ">
