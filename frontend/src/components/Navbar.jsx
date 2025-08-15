@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="flex h-14 items-center bg-black justify-between shadow-lg ">
+      <header className="flex h-14 items-center bg-black justify-between shadow-lg fixed top-0 left-0 right-0 z-10">
         <h2 className=" p-14 text-2xl font-bold text-green-600 ">YoYoChat</h2>
         <nav className="p-9 flex items-center justify-center gap-9">
 
