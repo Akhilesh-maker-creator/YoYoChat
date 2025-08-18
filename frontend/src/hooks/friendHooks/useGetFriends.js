@@ -1,19 +1,16 @@
-import { useQuery,useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { getMyFriends } from "../../lib/api/friend.api";
-
-
 
 const useGetFriends = () => {
   const {
-     data: getFriends,
-     isLoading,
-     error
+    data: getFriends,
+    isLoading,
+    error,
   } = useQuery({
-    queryKey:["getFriends"],
-    queryFn: getMyFriends
-  })
-  return { getFriends, isLoading, error }
-}
+    queryKey: ["getFriends"],
+    queryFn: getMyFriends,
+  });
+  return { friends:getFriends || [], isLoading, error };
+};
 
-export default useGetFriends
-
+export default useGetFriends;

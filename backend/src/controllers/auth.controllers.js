@@ -108,13 +108,17 @@ export const logout = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
     const users = await User.find({
       $and: [
         { _id: { $ne: req.user._id } },
-        { _id: { $nin: req.user.friends } },
+        { _id: { $nin: req.user.friends || [] } },
       ],
     }).select("-password");
-    res.status(201).json(users);
+    console.log(users)
+    res.status(200).json(users || []);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -122,6 +126,9 @@ export const getAllUsers = async (req, res) => {
 };
 export const getUser = async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
     const { userToFindemail } = req.body;
     const user = await User.findOne({ email: userToFindemail })
       .select("-password")
@@ -142,16 +149,13 @@ export const getUser = async (req, res) => {
 // to work on update
 export const updateUser = async (req, res) => {
   try {
-    const { name, bio, profilePic } = req.body;
-    const checkUser = await User.findOne({ email });
-    if (checkUser) {
-      return res
-        .status(400)
-        .json({ message: "Email already exists, choose another one" });
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
+    const { name, bio, profilePic } = req.body;
 
     let imageUrl;
-    if (image) {
+    if (profilePic) {
       const uploadResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadResponse.secure_url;
     }

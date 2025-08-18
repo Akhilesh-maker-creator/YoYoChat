@@ -1,229 +1,68 @@
-import { Link } from "react-router";
 import useGetFriends from "../hooks/friendHooks/useGetFriends";
 import useGetAllUsers from "../hooks/userHooks/useGetAllUsers";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
+import useOutgoingFriendReqs from "../hooks/friendHooks/useOutgoingFriendReqs";
+import { useEffect, useState } from "react";
+import FriendProfile from "../components/FriendProfile";
+import UserProfile from "../components/UserProfile";
 
 const HomePage = () => {
-  const { getFriends } = useGetFriends();
-  const { getAllUsers } = useGetAllUsers();
+  const { friends } = useGetFriends();
+  const { users } = useGetAllUsers();
+  const { outgoingFriendReqs } = useOutgoingFriendReqs();
+
+  const [outgoingFriendReqIds, setOutgoingFriendReqIds] = useState(new Set());
+
+  useEffect(() => {
+    const outgoingIds = new Set();
+    if (outgoingFriendReqs && outgoingFriendReqs.length > 0) {
+      outgoingFriendReqs.forEach((req) => {
+        outgoingIds.add(req.requestReceiver._id);
+      });
+      setOutgoingFriendReqIds(outgoingIds);
+    }
+  }, [outgoingFriendReqs]);
   return (
     <>
       <div className=" h-screen flex flex-col ">
-        <Navbar/>
+        <Navbar />
         <div className=" flex flex-1 ">
-        <Sidebar/>
+          <Sidebar />
 
-        {/* People */}
-        <main className=" p-6 bg-gray-950 flex flex-col  ml-64 mt-14 w-full overflow-y-auto ">
-          {/* Friends */}
-          <h2 className=" text-4xl font-semibold mb-10 ">Your Friends</h2>
+          {/* People */}
+          <main className=" p-6 bg-gray-950 flex flex-col  ml-64 mt-14 w-full overflow-y-auto ">
+            {/* Friends */}
+            <h2 className=" text-4xl font-semibold mb-8 ">Your Friends</h2>
 
-          <div className=" grid grid-cols-3 gap-5 mb-10 ">
-            {/* friend Card */}
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" border-white rounded-3xl p-2 text-center btn  ">
-                Message
-              </div>
+            <div className=" grid grid-cols-3 gap-5 mb-8 ">
+              {/* friend Card */}
+              {friends.length == 0 ? (
+                <h2> No Friends Yet</h2>
+              ) : (
+                friends.map((friend) => {
+                  return <FriendProfile key={friend._id} friend={friend} />;
+                })
+              )}
             </div>
-            {/* friend Card */}
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
 
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
+            {/* Other Users */}
+            <h2 className=" text-4xl font-semibold mb-8 ">Meet New People</h2>
 
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" border-white rounded-3xl p-2 text-center btn  ">
-                Message
-              </div>
+            {/* User Card */}
+            <div className=" grid grid-cols-3 gap-5 mb-6 ">
+              {users.map((user) => {
+                return (
+                  <UserProfile
+                    key={user._id}
+                    user={user}
+                    outgoingFriendReqIds={outgoingFriendReqIds}
+                  />
+                );
+              })}
             </div>
-            {/* friend Card */}
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" border-white rounded-3xl p-2 text-center btn  ">
-                Message
-              </div>
-            </div>
-            {/* friend Card */}
-            
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" border-white rounded-3xl p-2 text-center btn  ">
-                Message
-              </div>
-            </div>
-          </div>
-
-          {/* Other Users */}
-          <h2 className=" text-4xl font-semibold mb-10 ">Meet New People</h2>
-
-          {/* User Card */}
-          <div className=" grid grid-cols-3 gap-5 mb-10 ">
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" bg-green-500 rounded-3xl p-2 text-center text-black btn hover:bg-green-800 ">
-                Send Friend Request
-              </div>
-            </div>
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" bg-green-500 rounded-3xl p-2 text-center text-black btn hover:bg-green-800 ">
-                Send Friend Request
-              </div>
-            </div>
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" bg-green-500 rounded-3xl p-2 text-center text-black btn hover:bg-green-800 ">
-                Send Friend Request
-              </div>
-            </div>
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" bg-green-500 rounded-3xl p-2 text-center text-black btn hover:bg-green-800 ">
-                Send Friend Request
-              </div>
-            </div>
-            <div className=" card rounded-lg bg-base-300 shadow-lg p-4">
-              <div className=" flex mb-3 ">
-                <div className="bg-white rounded-full w-12 h-12 mr-3"></div>
-                <div className=" text-xl ">
-                  <p className=" text-lg ">Akhilesh Rawat</p>
-                  <p className=" text-xs ">Online</p>
-                </div>
-              </div>
-
-              <div className=" flex mb-3">
-                <span className=" text-xs border p-1 rounded-full ">
-                  email:akhi@gmail.com
-                </span>
-              </div>
-
-              <p className="p-3">Bio: Hlo I am Namer</p>
-
-              <div className=" bg-green-500 rounded-3xl p-2 text-center text-black btn hover:bg-green-800 ">
-                Send Friend Request
-              </div>
-            </div>
-          </div>
-          <div></div>
-        </main>
+            <div></div>
+          </main>
         </div>
       </div>
     </>

@@ -46,7 +46,7 @@ export const sendMessage = async()=>{
             return res.status(404).json({ message:"User not found"})          
         }
 
-        if(!req.user.friends.includes(fricoendId)){
+        if(!req.user.friends.includes(friendId)){
              return res.status(400).json({ message:"Cannot message if you're not their friend"})
         }
         if(!text && !image){

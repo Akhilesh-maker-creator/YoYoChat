@@ -9,7 +9,8 @@ const useAuth = () => {
      isLoading
   } = useQuery({
     queryKey:["authUser"],
-    queryFn: checkUser
+    queryFn: checkUser,
+    retry: false
   })
   return { authUser, isLoading }
 }

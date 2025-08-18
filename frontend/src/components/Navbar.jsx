@@ -1,12 +1,19 @@
 import React from "react";
 import { Link } from "react-router";
 import useAuth from "../hooks/userHooks/useAuth";
+import useLogout from "../hooks/userHooks/useLogout";
 
 
 
 const Navbar = () => {
   const { authUser } = useAuth()
   const isAuthenticated = Boolean(authUser)
+
+  const { logoutMutation } = useLogout()
+
+  const logout = ()=>{
+    logoutMutation()
+  }
 
   return (
     <>
@@ -23,7 +30,7 @@ const Navbar = () => {
           <button className="btn btn-sm ">Themes</button>
 
           {isAuthenticated &&
-            <button className=" btn btn-sm hidden sm:inline ">
+            <button onClick={logout} className=" btn btn-sm hidden sm:inline ">
             Logout
           </button>
           }

@@ -11,8 +11,9 @@ const useIncomingFriendReqs = () => {
     queryFn: getincomingFriendReqs,
   });
   return {
-    incomingPendingFriendReqs: incomingFriendReqs.incomingPendingFriendReqs,
-    incomingAcceptedFriendReqs: incomingFriendReqs.incomingFriendReqs, isLoading,
+    incomingPendingFriendReqs: incomingFriendReqs?.incomingPendingFriendReqs || [],
+    incomingAcceptedFriendReqs: incomingFriendReqs?.incomingFriendReqs || [],
+    isLoading,
     error,
   };
 };

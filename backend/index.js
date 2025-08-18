@@ -6,6 +6,7 @@ import authRoutes from "./src/routes/auth.routes.js"
 import friendRoutes from "./src/routes/friend.routes.js"
 import messageRoutes from "./src/routes/message.routes.js"
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 dotenv.config()
 connectDB()

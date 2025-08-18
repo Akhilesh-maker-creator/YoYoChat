@@ -12,6 +12,7 @@ const useSendFriendReq = () => {
     error
    } = useMutation({
     mutationFn: sendFriendReq,
+    onSuccess: ()=> queryClient.invalidateQueries({queryKey:["getAllUsers"]})
    })
 
    return { sendFriendReqMutation, isPending, error}

@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+
 const Sidebar = () => {
+  
   return (
       <section className=" w-64 bg-black p-2 mt-14 flex flex-col justify-start gap-4 fixed top-0 left-0 bottom-0 z-40 ">
           <Link
@@ -12,7 +14,7 @@ const Sidebar = () => {
           </Link>
           <Link
             className="   text-xl p-3 rounded-3xl shadow-lg hover:shadow-2xl hover:bg-base-300 transition "
-            to="/friends"
+            to="/friendreqs"
           >
             Notifications
           </Link>

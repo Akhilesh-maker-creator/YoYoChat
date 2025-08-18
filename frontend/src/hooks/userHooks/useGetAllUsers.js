@@ -12,7 +12,7 @@ const useGetAllUsers = () => {
     queryKey:["getAllUsers"],
     queryFn: getUsers
   })
-  return { getAllUsers, isLoading, error }
+  return { users:getAllUsers || [], isLoading, error }
 }
 
 export default useGetAllUsers

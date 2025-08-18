@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useLogin from "../hooks/userHooks/useLogin";
+import { Link } from "react-router";
 
 
 const LoginPage = () => {
@@ -11,7 +12,7 @@ const LoginPage = () => {
   });
 
   const handleSubmit = (e) => { 
-    e.PreventDefault()
+    e.preventDefault()
     loginMutation(loginData)};
   return (
     
@@ -29,9 +30,9 @@ const LoginPage = () => {
             <input
               type="email"
               name="email"
-              id="email"
+            
               value={loginData.email}
-              onChange={(e)=>{setLoginData({...loginData,password: e.target.value })}}
+              onChange={(e)=>{setLoginData({...loginData,email: e.target.value })}}
               placeholder="jamesbond989@example.com"
               className=" p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600  "
               />
@@ -44,7 +45,7 @@ const LoginPage = () => {
             <input
               type="password"
               name="password"
-              id="password"
+            
               value={loginData.password}
               onChange={(e)=>{setLoginData({...loginData,password: e.target.value })}}
               placeholder="*********"
@@ -63,6 +64,10 @@ const LoginPage = () => {
             )}
           </button>
         </form>
+        <p className="text-sm text-center">
+            Do not have an account?
+            <Link to= "/signup"className="text-primary hover:underline" > Signup </Link>
+        </p>
       </div>
    
   
