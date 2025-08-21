@@ -21,7 +21,7 @@ const FriendProfile = ({ friend }) => {
                 </span>
               </div>
 
-              <p className="p-3">Bio: {friend.bio}</p>
+              <p className="p-3">Bio: {friend.bio.slice(0,25)}</p>
 
               <button className=" border-white rounded-3xl p-2 text-center btn  ">
                 Message

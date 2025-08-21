@@ -1,19 +1,18 @@
-import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import useDeleteUser from "../hooks/userHooks/useDeleteUser";
 import useUpdateUser from "../hooks/userHooks/useUpdateUser";
 import useAuth from "../hooks/userHooks/useAuth";
 import { Camera } from "lucide-react";
+import { useState } from "react";
 
 const ProfilePage = () => {
   
   const { updateUserMutation, isPending } = useUpdateUser();
   const { authUser, isLoading } = useAuth();
   const [updatedData, setUpdatedData] = useState({
-    name: authUser.name,
-    bio: authUser.bio,
-    profilePic: authUser.profilePic,
+    name: authUser?.name,
+    bio: authUser?.bio,
+    profilePic: authUser?.profilePic,
   });
 
   const handleUserUpdate = (e)=>{
@@ -44,13 +43,13 @@ const ProfilePage = () => {
           <div className="w-5/12 p-4 rounded-2xl bg-base-300 shadow-xl ">
             <h2 className=" text-3xl font-semibold text-white ">Profile</h2>
             <img
-              src={updatedData.profilePic || authUser.profilePic}
+              src={updatedData.profilePic || authUser?.profilePic}
               alt="profilePic"
               className=" ml-auto mr-auto w-36 h-36 rounded-full border-4 "
             />
             <form className=" flex flex-col gap-4">
-              <div>
-                <label htmlFor="imgUpload" className=" absolute bottom-0 right-0 
+              <div className="relative">
+                <label htmlFor="imgUpload" className=" absolute bottom-0 right-40
                   bg-base-content hover:scale-105
                   p-2 rounded-full cursor-pointer 
                   transition-all duration-200">
@@ -68,7 +67,7 @@ const ProfilePage = () => {
                 <input
                   type="text"
                   name="name"
-                  value={updatedData.name || authUser.name}
+                  value={updatedData.name || authUser?.name}
                   onChange={(e)=>{setUpdatedData({...updatedData, name:e.target.value})}}
                   className=" p-3 w-full rounded-lg focus:outline-none ring-2 ring-white  "
                 />
@@ -77,7 +76,7 @@ const ProfilePage = () => {
               <div>
                 <h3 className=" block font-medium text-sm mb-2">Email</h3>
                 <p className=" p-3 w-full rounded-lg  ring-2 ring-white  ">
-                  {authUser.email}
+                  {authUser?.email}
                 </p>
               </div>
               <div>
@@ -90,7 +89,7 @@ const ProfilePage = () => {
                 <textarea
                   type="text"
                   name="bio"
-                  value={updatedData.bio || authUser.bio}
+                  value={updatedData.bio || authUser?.bio}
                   onChange={(e)=>{setUpdatedData({...updatedData, bio:e.target.value})}}
                   rows="5"
                   className=" p-3 w-full rounded-lg focus:outline-none ring-2 ring-white  "

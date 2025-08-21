@@ -156,7 +156,7 @@ export const updateUser = async (req, res) => {
 
     let imageUrl;
     if (profilePic) {
-      const uploadResponse = await cloudinary.uploader.upload(image);
+      const uploadResponse = await cloudinary.uploader.upload(profilePic);
       imageUrl = uploadResponse.secure_url;
     }
     const user = req.user;

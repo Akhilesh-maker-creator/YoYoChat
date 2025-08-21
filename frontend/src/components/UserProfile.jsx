@@ -28,7 +28,7 @@ const UserProfile = ({ user, outgoingFriendReqIds }) => {
         </span>
       </div>
 
-      <p className="p-3">Bio: {user.bio}</p>
+      <p className="p-3">Bio: {user.bio.slice(0,25)}</p>
 
       <button
         className={` bg-green-500 rounded-3xl p-2 text-center text-black  hover:bg-green-800 ${
