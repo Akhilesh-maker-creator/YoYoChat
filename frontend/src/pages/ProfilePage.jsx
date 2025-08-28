@@ -31,8 +31,8 @@ const ProfilePage = () => {
     reader.onload = async () => {
       const base64Image = reader.result;
       setUpdatedData({ ...updatedData, profilePic: base64Image });
-    };
-  };
+    }
+  }
 
   return (
     <div className=" h-screen flex flex-col ">

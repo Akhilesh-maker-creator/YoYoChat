@@ -8,9 +8,9 @@ const router = express.Router()
 router.use(ProtectedRoute)
 
 
-router.post("/sendMessage/:id", sendMessage )
+router.post("/sendMessage/:friendId", sendMessage )
 
-router.get("/getMessages/:id", getMessages )
+router.get("/getMessages/:friendId", getMessages )
 
 
 export default router

@@ -17,7 +17,7 @@ const userSocketMap = new Map ()
 
 io.on('connection', (socket)=> {
     console.log("a user connected")
-    const userId = socket.handshake.user.userId
+    const userId = socket.handshake.query.userId
     if(userId){
         socket.userId = userId
         userSocketMap.set(userId, socket.id)

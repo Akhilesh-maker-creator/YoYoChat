@@ -23,6 +23,7 @@ const HomePage = () => {
       setOutgoingFriendReqIds(outgoingIds);
     }
   }, [outgoingFriendReqs]);
+  
   return (
     <>
       <div className=" h-screen flex flex-col ">
