@@ -145,8 +145,27 @@ export const getUser = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+export const getUserById = async (req, res) => {
+  try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const { userId } = req.body;
+    const user = await User.findOne({ _id: userId })
+      .select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (userId === req.user._id) {
+      return res.status(400).json({ message: "You cannot Message Yourself" });
+    }
+    res.status(201).json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
-// to work on update
 export const updateUser = async (req, res) => {
   try {
     if (!req.user || !req.user._id) {

@@ -35,6 +35,10 @@ export const  getUser = async(userData)=>{
     const res = await axiosInstance.post("/auth/getUser", userData)
     return res.data
 }
+export const  getUserById = async(userId)=>{
+    const res = await axiosInstance.post("/auth/getUserById", {userId: userId})
+    return res.data
+}
 export const  getUsers = async()=>{
     const res = await axiosInstance.get("/auth/getUsers")
     return res.data

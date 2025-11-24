@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
@@ -7,19 +7,11 @@ import ProfilePage from "./pages/ProfilePage";
 import useAuth from "./hooks/userHooks/useAuth";
 import FriendRequestPage from "./pages/FriendRequestPage";
 import ChatPage from "./pages/ChatPage";
-import useSocketHook from "./hooks/socketHook/useSocketHook";
 
 
 
 const App = () => {
   const { authUser, isLoading } = useAuth()
-  // const { connectSocket } = useSocketHook()
-
-  // useEffect(() => {
-  //   if (authUser?._id) {
-  //     connectSocket(authUser._id); // reload pe socket auto connect
-  //   }
-  // }, [authUser]);
   const isAuthenticated = Boolean(authUser)
   if (isLoading) return <p>Loading...</p>
   return (
@@ -32,12 +24,7 @@ const App = () => {
         <Route path="/profile" element={ isAuthenticated ? <ProfilePage />: <Navigate to = "/login"/>} />
         <Route path="/friendreqs" element={ isAuthenticated ? <FriendRequestPage />: <Navigate to = "/login"/>} /> 
         <Route path="/chat/:friendId" element={ isAuthenticated ? <ChatPage />: <Navigate to = "/login"/>} /> 
-        {/* <Route path="/" element={ <HomePage />} />
-        <Route path="/login" element={  <LoginPage />} />
-        <Route path="/signUp" element={  <SignUpPage />} />
-        <Route path="/profile" element={  <ProfilePage />} />
-        <Route path="/friendreqs" element={  <FriendRequestPage />} />
-        <Route path="/chat" element={  <ChatPage />} /> */}
+        
       </Routes>
     </div>
   );

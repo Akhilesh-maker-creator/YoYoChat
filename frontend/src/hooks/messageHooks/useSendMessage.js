@@ -1,25 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { sendMessage } from "../../lib/api/message.api";
-import useSocketHook from "../socketHook/useSocketHook";
 
+const useSendMessage = (Id) => { 
+ const queryClient = useQueryClient();
 
-
-const useSendMessage = () => {
-  const { updateMessages } = useSocketHook()
-  const queryClient = useQueryClient()
-
-  const {
-    mutate: sendMessageMutation,
-    isPending,
+ const {
+  mutate: sendMessageMutation,
+     isLoading,
     error
-  } = useMutation({
-    mutationFn: sendMessage,
-    onSuccess: (data)=> {
-      updateMessages(data)
-      // queryClient.invalidateQueries({queryKey:["getMessages"]})
+ } = useMutation({
+   mutationFn: sendMessage,
+     onSuccess: (data) => {
+      queryClient.setQueryData(["messages", Id], (oldData) => {
+        return [...(oldData || []), data];
+      });
     }
-  })
-  return { sendMessageMutation, isPending, error }
-}
+   });
+  return { sendMessageMutation, isLoading, error };
+};
 
-export default useSendMessage
+export default useSendMessage;

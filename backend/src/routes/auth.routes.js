@@ -1,5 +1,5 @@
 import express from "express"
-import { deleteUser, getAllUsers, getUser, login, logout, signUp, updateUser } from "../controllers/auth.controllers.js"
+import { deleteUser, getAllUsers, getUser, getUserById, login, logout, signUp, updateUser } from "../controllers/auth.controllers.js"
 import { ProtectedRoute } from "../middlewares/auth.middleware.js"
 import { body,validationResult} from "express-validator"
 
@@ -9,6 +9,7 @@ const router = express.Router()
 router.get("/getUsers",ProtectedRoute, getAllUsers)
 
 router.post("/getUser",ProtectedRoute, getUser)
+router.post("/getUserById",ProtectedRoute, getUserById)
 
 router.post("/signUp", [
   body('name', 'Enter a valid name').isLength({ min: 5 }),

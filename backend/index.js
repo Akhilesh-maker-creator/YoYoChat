@@ -8,10 +8,13 @@ import messageRoutes from "./src/routes/message.routes.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 
+import path from "path";
+
 dotenv.config()
 connectDB()
 
 const PORT = process.env.PORT
+const __dirname = path.resolve();
 
 app.use(cors({
   origin: "http://localhost:5173",
@@ -24,7 +27,12 @@ app.use("/api/auth", authRoutes)
 app.use("/api/friend", friendRoutes)
 app.use("/api/message", messageRoutes)
 
-
+if (process.env.Node_ENV === "production") {
+  app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'));
+  });
+}
 server.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`)
 })

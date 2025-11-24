@@ -1,107 +1,100 @@
+import React, { useState, useEffect } from "react";
+import { Camera, Mail, User, FileText, Save } from "lucide-react"; 
+
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import ThemeSynchronizer from "../hooks/themeHook/useThemeSynchronizer";
 import useUpdateUser from "../hooks/userHooks/useUpdateUser";
 import useAuth from "../hooks/userHooks/useAuth";
-import { Camera } from "lucide-react";
-import { useState } from "react";
 
 const ProfilePage = () => {
-  
   const { updateUserMutation, isPending } = useUpdateUser();
-  const { authUser, isLoading } = useAuth();
-  const [updatedData, setUpdatedData] = useState({
-    name: authUser?.name,
-    bio: authUser?.bio,
-    profilePic: authUser?.profilePic,
-  });
+  const { authUser } = useAuth();
+  const [updatedData, setUpdatedData] = useState({ name: "", bio: "", profilePic: "" });
 
-  const handleUserUpdate = (e)=>{
-    e.preventDefault()
-    updateUserMutation(updatedData)
-  }
+  useEffect(() => {
+    if (authUser) {
+      setUpdatedData({
+        name: authUser.name || "",
+        bio: authUser.bio || "",
+        profilePic: authUser.profilePic || "",
+      });
+    }
+  }, [authUser]);
+
+  const handleUserUpdate = (e) => {
+    e.preventDefault();
+    updateUserMutation(updatedData);
+  };
 
   const handleImgUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
-
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      setUpdatedData({ ...updatedData, profilePic: base64Image });
-    }
-  }
+    reader.onload = () => setUpdatedData((prev) => ({ ...prev, profilePic: reader.result }));
+  };
 
   return (
-    <div className=" h-screen flex flex-col ">
-      <Navbar />
-      <div className=" flex flex-1 ">
-        <Sidebar />
-        <main className=" p-6 bg-gray-950  ml-64 mt-14 w-full flex justify-center">
-          <div className="w-5/12 p-4 rounded-2xl bg-base-300 shadow-xl ">
-            <h2 className=" text-3xl font-semibold text-white ">Profile</h2>
-            <img
-              src={updatedData.profilePic || authUser?.profilePic}
-              alt="profilePic"
-              className=" ml-auto mr-auto w-36 h-36 rounded-full border-4 "
-            />
-            <form className=" flex flex-col gap-4">
-              <div className="relative">
-                <label htmlFor="imgUpload" className=" absolute bottom-0 right-40
-                  bg-base-content hover:scale-105
-                  p-2 rounded-full cursor-pointer 
-                  transition-all duration-200">
-                  <Camera className="w-5 h-5 text-base-200" />
-                  <input type="file" className=" hidden" name="imgUpload" id="imgUpload" onChange={handleImgUpload} />
-                </label>
-              </div>
-              <div>
-                <label
-                  htmlFor="name"
-                  className=" block font-medium text-sm mb-2"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={updatedData.name || authUser?.name}
-                  onChange={(e)=>{setUpdatedData({...updatedData, name:e.target.value})}}
-                  className=" p-3 w-full rounded-lg focus:outline-none ring-2 ring-white  "
-                />
-              </div>
+    <div className="drawer lg:drawer-open">
+      <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+      
+      <div className="drawer-content flex flex-col h-screen bg-base-200">
+        <ThemeSynchronizer />
+        <Navbar />
 
-              <div>
-                <h3 className=" block font-medium text-sm mb-2">Email</h3>
-                <p className=" p-3 w-full rounded-lg  ring-2 ring-white  ">
-                  {authUser?.email}
-                </p>
-              </div>
-              <div>
-                <label
-                  htmlFor="bio"
-                  className=" block font-medium text-sm mb-2"
-                >
-                  Bio
-                </label>
-                <textarea
-                  type="text"
-                  name="bio"
-                  value={updatedData.bio || authUser?.bio}
-                  onChange={(e)=>{setUpdatedData({...updatedData, bio:e.target.value})}}
-                  rows="5"
-                  className=" p-3 w-full rounded-lg focus:outline-none ring-2 ring-white  "
-                />
-              </div>
+        {/* Added pt-20 for Navbar clearance */}
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 mt-10 flex justify-center">
+          <div className="w-full max-w-2xl">
+            <div className="card bg-base-100 shadow-xl border border-base-300">
+              <div className="h-20 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-t-2xl"></div>
+              <div className="card-body -mt-16 pt-0">
+                
+                <div className="flex justify-center mb-6">
+                  <div className="relative group">
+                    <div className="avatar">
+                      <div className="w-32 h-32 rounded-full ring-4 ring-base-100 shadow-lg">
+                        <img src={updatedData.profilePic || "https://avatar.iran.liara.run/public"} alt="Profile" className="object-cover"/>
+                      </div>
+                    </div>
+                    <label htmlFor="imgUpload" className="absolute bottom-0 right-0 bg-primary text-primary-content p-2.5 rounded-full cursor-pointer shadow-lg hover:scale-110 transition-transform">
+                      <Camera className="size-5" />
+                      <input type="file" id="imgUpload" className="hidden" accept="image/*" onChange={handleImgUpload} />
+                    </label>
+                  </div>
+                </div>
 
-              <button type="submit" className=" btn btn-md bg-base-100 " onClick={handleUserUpdate}>
-                Update
-              </button>
-            </form>
+                <form onSubmit={handleUserUpdate} className="space-y-6">
+                  <div className="form-control">
+                    <label className="label"><span className="label-text font-medium flex items-center gap-2"><User className="size-4"/> Full Name</span></label>
+                    <input type="text" className="input input-bordered w-full focus:input-primary" value={updatedData.name} onChange={(e) => setUpdatedData({...updatedData, name: e.target.value})} />
+                  </div>
+                  <div className="form-control">
+                    <label className="label"><span className="label-text font-medium flex items-center gap-2"><Mail className="size-4"/> Email Address</span></label>
+                    <input type="text" value={authUser?.email || ""} readOnly className="input input-bordered w-full bg-base-200/50 text-base-content/60 cursor-not-allowed" />
+                  </div>
+                  <div className="form-control">
+                    <label className="label"><span className="label-text font-medium flex items-center gap-2"><FileText className="size-4"/> Bio</span></label>
+                    <textarea className="textarea textarea-bordered h-32 focus:textarea-primary text-base" value={updatedData.bio} onChange={(e) => setUpdatedData({...updatedData, bio: e.target.value})} ></textarea>
+                  </div>
+                  <div className="card-actions justify-end mt-4">
+                    <button type="submit" className="btn btn-primary w-full sm:w-auto min-w-[150px]" disabled={isPending}>
+                      {isPending ? <span className="loading loading-spinner"></span> : <><Save className="size-4"/> Save Changes</>}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </main>
+      </div>
+
+      {/* SIDEBAR */}
+      <div className="drawer-side z-40">
+        <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
+        <aside className="w-72 h-full">
+           <Sidebar />
+        </aside>
       </div>
     </div>
   );
