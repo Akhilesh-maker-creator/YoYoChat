@@ -25,7 +25,7 @@ router.post("/logout",ProtectedRoute, logout)
 
 router.put("/updateUser",
   [body('name', 'Enter a valid name').isLength({ min: 5 }),
-  body('bio', 'Enter a valid bio').isLength({ min: 10 })],ProtectedRoute, updateUser)
+  body('bio', 'Enter a valid bio').isLength({ min: 10 })],ProtectedRoute,upload.single("image"), updateUser)
 
 router.delete("/deleteUser",ProtectedRoute, deleteUser)
 

@@ -6,7 +6,6 @@ const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:3000
 const useSocketHook = create(
 
     (set, get) => ({
-      // messages: [],
       onlineUsers: [],
       socket: null,
       selectedUser: null,
@@ -15,16 +14,6 @@ const useSocketHook = create(
         set({ selectedUser: user });
       },
       clearSelectedUser: () => set({ selectedUser: null }),
-
-      // setMessages: (data) => {
-      //   set({ messages: data });
-      // },
-
-      // updateMessages: (data) => {
-      //   set((state) => ({
-      //     messages: [...state.messages, data],
-      //   }));
-      // },
 
       connectSocket: (userId) => {
         const { socket } = get();
