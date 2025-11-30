@@ -10,6 +10,7 @@ import useAuth from "../hooks/userHooks/useAuth";
 const ProfilePage = () => {
   const { updateUserMutation, isPending } = useUpdateUser();
   const { authUser } = useAuth();
+  const [imagePreview, setImagePreview] = useState(null);
   const [updatedData, setUpdatedData] = useState({ name: "", bio: "", profilePic: "" });
 
   useEffect(() => {
@@ -19,20 +20,26 @@ const ProfilePage = () => {
         bio: authUser.bio || "",
         profilePic: authUser.profilePic || "",
       });
+      setImagePreview(authUser.profilePic)
     }
   }, [authUser]);
 
   const handleUserUpdate = (e) => {
     e.preventDefault();
-    updateUserMutation(updatedData);
+    const formData = new FormData();
+    if (updatedData.profilePic) formData.append("image", updatedData.profilePic);
+    formData.append("name", updatedData.name || " ");
+    formData.append("bio", updatedData.bio || " ");
+    updateUserMutation(formData);
   };
 
   const handleImgUpload = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file || !file.type.startsWith("image/")) return;
+    setUpdatedData((prev) => ({ ...prev, profilePic: file }));
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setUpdatedData((prev) => ({ ...prev, profilePic: reader.result }));
+    reader.onload = () => setImagePreview(reader.result);
   };
 
   return (
@@ -54,7 +61,7 @@ const ProfilePage = () => {
                   <div className="relative group">
                     <div className="avatar">
                       <div className="w-32 h-32 rounded-full ring-4 ring-base-100 shadow-lg">
-                        <img src={updatedData.profilePic || "https://avatar.iran.liara.run/public"} alt="Profile" className="object-cover"/>
+                        <img src={imagePreview || "https://avatar.iran.liara.run/public"} alt="Profile" className="object-cover"/>
                       </div>
                     </div>
                     <label htmlFor="imgUpload" className="absolute bottom-0 right-0 bg-primary text-primary-content p-2.5 rounded-full cursor-pointer shadow-lg hover:scale-110 transition-transform">

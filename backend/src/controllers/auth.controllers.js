@@ -171,16 +171,15 @@ export const updateUser = async (req, res) => {
     if (!req.user || !req.user._id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    const { name, bio, profilePic } = req.body;
+    const { name, bio } = req.body;
 
-    let imageUrl;
-    if (profilePic) {
-      const uploadResponse = await cloudinary.uploader.upload(profilePic);
-      imageUrl = uploadResponse.secure_url;
-    }
     const user = req.user;
+    let imageUrl;
+    if (req.file) {
+      imageUrl = req.file.path
+      user.profilePic = imageUrl;
+    }
     user.name = name;
-    user.profilePic = imageUrl;
     user.bio = bio;
     await user.save();
 

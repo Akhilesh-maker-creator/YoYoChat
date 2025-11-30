@@ -2,7 +2,7 @@ import express from "express"
 import { deleteUser, getAllUsers, getUser, getUserById, login, logout, signUp, updateUser } from "../controllers/auth.controllers.js"
 import { ProtectedRoute } from "../middlewares/auth.middleware.js"
 import { body,validationResult} from "express-validator"
-
+import upload from "../middlewares/upload.js"
 
 const router = express.Router()
 
@@ -25,7 +25,7 @@ router.post("/logout",ProtectedRoute, logout)
 
 router.put("/updateUser",
   [body('name', 'Enter a valid name').isLength({ min: 5 }),
-  body('bio', 'Enter a valid bio').isLength({ min: 10 })],ProtectedRoute, updateUser)
+  body('bio', 'Enter a valid bio').isLength({ min: 10 })],ProtectedRoute,upload.single("image"), updateUser)
 
 router.delete("/deleteUser",ProtectedRoute, deleteUser)
 
