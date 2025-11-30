@@ -154,7 +154,7 @@ const ChatPage = () => {
             
             <div className="flex-1 min-w-0">
               <h3 className="font-bold text-base-content truncate">{selectedUser?.name || "Loading..."}</h3>
-              <p className="text-xs text-base-content/50">Online</p>
+              {/* <p className="text-xs text-base-content/50">Online</p> */}
             </div>
 
             <button onClick={handleClose} className="btn btn-ghost btn-circle btn-sm hidden md:flex">

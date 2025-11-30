@@ -12,7 +12,7 @@ const useIncomingFriendReqs = () => {
   });
   return {
     incomingPendingFriendReqs: incomingFriendReqs?.incomingPendingFriendReqs || [],
-    incomingAcceptedFriendReqs: incomingFriendReqs?.incomingFriendReqs || [],
+    incomingAcceptedFriendReqs: incomingFriendReqs?.incomingAcceptedFriendReqs || [],
     isLoading,
     error,
   };

@@ -79,7 +79,6 @@ const IncomingFriendReqProfile = ({ user, requestId }) => {
           <Check className="size-4" /> Confirm
         </button>
         
-        {/* Optional: Add a 'Delete' or 'Ignore' button here if your API supports it */}
         <button className="btn btn-ghost btn-sm btn-circle text-base-content/50">
            <X className="size-5" />
         </button>
