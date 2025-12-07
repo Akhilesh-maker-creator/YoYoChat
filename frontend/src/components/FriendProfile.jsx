@@ -46,7 +46,7 @@ const FriendProfile = ({ friend }) => {
           )}
         </div>
 
-        {/* ACTION: Message Button */}
+       
         <div className="card-actions">
           <button 
             onClick={handleClick}

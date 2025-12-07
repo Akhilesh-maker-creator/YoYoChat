@@ -7,6 +7,7 @@ import ProfilePage from "./pages/ProfilePage";
 import useAuth from "./hooks/userHooks/useAuth";
 import FriendRequestPage from "./pages/FriendRequestPage";
 import ChatPage from "./pages/ChatPage";
+import VideoCallPage from "./pages/VideoCallPage";
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/profile" element={ isAuthenticated ? <ProfilePage />: <Navigate to = "/login"/>} />
         <Route path="/friendreqs" element={ isAuthenticated ? <FriendRequestPage />: <Navigate to = "/login"/>} /> 
         <Route path="/chat/:friendId" element={ isAuthenticated ? <ChatPage />: <Navigate to = "/login"/>} /> 
+        <Route path="/video/:roomId" element={ isAuthenticated ?<VideoCallPage /> : <Navigate to = "/login"/>} />
         
       </Routes>
     </div>

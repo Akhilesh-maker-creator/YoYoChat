@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router"; // Standard import for web
+import { Link } from "react-router"; 
 import { User, Mail, Lock, Eye, EyeOff, UserPlus, AlertTriangle } from "lucide-react";
 import useSignUp from "../hooks/userHooks/useSignUp";
 
@@ -109,7 +109,7 @@ const SignUpPage = () => {
               </label>
             </div>
 
-            {/* ERROR ALERT (Shows if hook returns an error) */}
+            {/* ERROR ALERT */}
             {error && (
               <div role="alert" className="alert alert-error text-sm py-2 rounded-lg">
                 <AlertTriangle className="size-4" />

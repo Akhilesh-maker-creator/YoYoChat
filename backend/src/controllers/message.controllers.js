@@ -76,3 +76,34 @@ export const sendMessage = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const generateVideoToken = async(req, res)=>{
+  try{
+  const { userID, roomID } = req.body;
+
+        if (!userID || !roomID) {
+            return res.status(400).send({ error: "Missing userID or roomID" });
+        }
+
+        
+        const effectiveTimeInSeconds = 3600 * 24; 
+        const token = generateToken04(
+            appID,
+            userID,
+            serverSecret,
+            effectiveTimeInSeconds,
+        
+            null 
+        );
+
+        
+        res.status(200).send({
+            appID: appID, 
+            token: token 
+        });
+
+    } catch (error) {
+        console.error("Token generation failed:", error);
+        res.status(500).send({ error: "Internal server error during token generation." });
+    }
+}

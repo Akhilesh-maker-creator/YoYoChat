@@ -18,7 +18,7 @@ const FriendRequestPage = () => {
         <ThemeSynchronizer />
         <Navbar />
 
-        {/* Added pt-20 for Navbar clearance */}
+        
         <main className="flex-1 overflow-y-auto p-4 md:p-8 mt-12">
           <div className="max-w-6xl mx-auto space-y-8">
             
@@ -48,7 +48,7 @@ const FriendRequestPage = () => {
         </main>
       </div>
 
-      {/* SIDEBAR CONTAINER - STRICT WIDTH w-72 */}
+     
       <div className="drawer-side z-40">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
         <aside className="w-72 h-full">
