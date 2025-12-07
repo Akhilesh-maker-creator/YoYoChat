@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { io } from "socket.io-client";
-const BASE_URL = "http://localhost:3000" 
+const BASE_URL = "https://yoyochat-dq56.onrender.com" 
 
 const useSocketHook = create(
 
